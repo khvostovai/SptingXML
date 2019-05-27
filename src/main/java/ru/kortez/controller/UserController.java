@@ -11,7 +11,7 @@ import ru.kortez.service.UserService;
 public class UserController {
 
     @Autowired
-    UserService userServise;
+    UserService userServiсe;
 
     @RequestMapping(value = "/users", method = RequestMethod.GET)
     private @ResponseBody String getUsers(){
@@ -20,12 +20,11 @@ public class UserController {
 
     @RequestMapping(value = "/user", method = RequestMethod.GET)
     private @ResponseBody String getUser(){
-        return userServise.getUser(1).getLogin();
+        return userServiсe.getUser(1).getLogin();
     }
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     private @ResponseBody String getList() {
-        System.out.println(userServise.getAllUsers());
         return "List";
     }
 }
