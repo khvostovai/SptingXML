@@ -30,7 +30,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav ml-auto mt-2">
-                <li class="nav-item"><span class="white">{{data["first"]}}</br>{{data["last"]}}</span></li>
+                <li class="nav-item"><span class="white">${user_name}</br>${user_surname}</span></li>
                 <li class="nav-item"><a class="nav-link" href="/logout">Log Out</a></li>
             </ul>
         </div>

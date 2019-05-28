@@ -12,7 +12,7 @@ import java.util.List;
 public class UserDao {
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public User findById(int id){
         return sessionFactory.openSession().get(User.class, id);

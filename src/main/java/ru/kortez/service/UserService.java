@@ -6,13 +6,14 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.UserDao;
 import ru.kortez.models.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
 public class UserService {
 
     @Autowired
-    UserDao userDao;
+    private UserDao userDao;
 
     @Transactional
     public User getUser(int id){
@@ -37,5 +38,12 @@ public class UserService {
     @Transactional
     public List getAllUsers() {
         return userDao.findAll();
+    }
+
+    public User checkUseer(String login, String password) {
+        User user = userDao.findByLogin(login);
+        if (user == null) return null;
+        if (!user.getPasswd().equals(password)) return null;
+        return user;
     }
 }

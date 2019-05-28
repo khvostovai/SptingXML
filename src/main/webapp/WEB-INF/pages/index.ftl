@@ -1,7 +1,7 @@
 <#import "parts/UnLoginPart.ftl" as p>
 <@p.page "index">
     <div class="container col-3 text-center">
-        <form action="/login" method="post">
+        <form action="/forum/login" method="post">
             <div class="form-group">
                 <input autocomplete="off" autofocus class="form-control" name="login" placeholder="Login" type="text"/>
             </div>
