@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.UserDao;
+import ru.kortez.models.Login;
 import ru.kortez.models.User;
 
 import javax.servlet.http.HttpSession;
@@ -40,10 +41,10 @@ public class UserService {
         return userDao.findAll();
     }
 
-    public User checkUseer(String login, String password) {
-        User user = userDao.findByLogin(login);
+    public User validateUser(Login login) {
+        User user = userDao.findByLogin(login.getLogin());
         if (user == null) return null;
-        if (!user.getPasswd().equals(password)) return null;
+        if (!user.getPasswd().equals(login.getPassword())) return null;
         return user;
     }
 }

@@ -6,7 +6,7 @@
 
     <mvc:annotation-driven/>
     <context:component-scan base-package="ru.kortez"/>
-    <mvc:view-controller path="/" view-name="index"/>
+    <mvc:view-controller path="/" view-name="login"/>
     <mvc:view-controller path="/reg" view-name="registration"/>
     <mvc:view-controller path="/the" view-name="themes"/>
 
