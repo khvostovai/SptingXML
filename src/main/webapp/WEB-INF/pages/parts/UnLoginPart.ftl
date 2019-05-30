@@ -30,7 +30,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
             <ul class="navbar-nav ml-auto mt-2">
-                <li class="nav-item"><a class="nav-link" href="/register">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="/forum/register">Register</a></li>
                 <li class="nav-item"><a class="nav-link" href="/login">Log In</a></li>
             </ul>
         </div>
