@@ -1,0 +1,76 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<script src="static/js/scriptReq.js"></script>
+{% endblock %}
+
+{% block title %}
+Requirements
+{% endblock %}
+
+
+{% block main %}
+<div id="divBack" class="container text-left"></div>
+<div id="reqData" class="container text-center"></div>
+<div class="container">
+    <div class="row">
+        <div class=col>
+            <form action="/addreq">
+                <button id="addButton" class="btn btn-primary" type="button" data-toggle="modal" data-pid="0" data-action="/add" data-target="#addReq">For add requirement click hire
+                </button>
+            </form>
+            <hr/>
+        </div>
+    </div>
+</div>
+
+<div id="buttons">
+</div>
+
+<!--modal window for add req-->
+<div class="modal fade" id="addReq" tabindex="-1" role="dialog" aria-labelledby="addReqLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addReqLabel">Add requirement</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="container">
+                    <div class="form-group">
+                        <label>type:</label>
+                        <select autofocus class="form-control" id="type">
+                            <option value="0">to be define</option>
+                            <option value="1">finctional</option>
+                            <option value="2">construct</option>
+                            <option value="3">interface</option>
+                        </select>
+                        <label>priority</label>
+                        <select autofocus class="form-control" id="priority">
+                            {% for i in range(11) %}
+                            <option value="{{ i }}">{{ i }}</option>
+                            {% endfor %}
+                        </select>
+                        </br>
+                        <label>complite date</label>
+                        <input  class="form-control" id="complite_date"  type="date"/>
+                    </div>
+                    <div class="form-group">
+                        <label>Title: </label>
+                        <input class="form-control" id="title" type="text"/>
+                    </div>
+                    <div class="form-group">
+                        <textarea class="form-control" id="requirement"  cols="60" rows="5"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button data-dismiss="modal" type="button" class="btn btn-secondary">Close</button>
+                <button id="actionModalButton" class="btn btn-primary" type="button">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

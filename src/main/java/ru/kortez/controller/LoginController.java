@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import ru.kortez.models.Login;
 import ru.kortez.models.User;
 import ru.kortez.service.UserService;
@@ -27,18 +28,17 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-    public ModelAndView loginProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") Login login) {
-        ModelAndView mav = null;
+    public RedirectView loginProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") Login login) {
+        RedirectView rv = null;
         User user = userService.validateUser(login);
         if (user != null) {
-            mav = new ModelAndView("themes");
-            mav.addObject("user_name", user.getName());
-            mav.addObject("user_surname", user.getSurname());
+            request.getSession().setAttribute("user_name", user.getName());
+            request.getSession().setAttribute("user_surname", user.getSurname());
+            rv = new RedirectView("themes");
         }
         else {
-            mav = new ModelAndView("login");
-            mav.addObject("themes", "user not found");
+            rv = new RedirectView("login");
         }
-        return mav;
+        return rv;
     }
 }
