@@ -10,7 +10,7 @@
         <#list themes as theme>
             <!-- list of themes -->
             <hr>
-            <div class="theme container btn btn-light">
+            <div class="theme container btn btn-light" id=${theme.id}>
                 <p><b>${theme.title}</b></p>
                 last message
                 <hr>
@@ -51,6 +51,7 @@
     <!--script for button save in modal-->
     <script>
         $(document).ready(function () {
+            // for add theme button
             $("#actionModalButton").on('click', function () {
                 $.ajax({
                     url: "/forum/createTheme",
@@ -58,6 +59,11 @@
                     data: "title=" + $("#title").val()
                 });
             });
+
+            //open theme page in theme id
+            $("div.theme").on('click', function () {
+                window.location.href = "/forum/theme?themeId="+$(this).attr("id");
+            })
         })
     </script>
 </@l.page>
