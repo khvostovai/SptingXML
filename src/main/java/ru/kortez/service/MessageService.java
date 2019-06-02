@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.MessageDao;
 import ru.kortez.models.Message;
 
-import java.util.List;
 
 @Service
 public class MessageService {

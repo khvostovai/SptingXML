@@ -28,6 +28,10 @@ public class Message {
     public Message() {
     }
 
+    public Message(Theme theme) {
+        this.theme = theme;
+    }
+
     public Message(String text, Theme theme, User author) {
         this.message = text;
         this.date = new Date();
@@ -37,7 +41,13 @@ public class Message {
 
     @Override
     public String toString() {
-        return "Theme: "+ theme.getTitle() +" Message: " + message + " Author: " + author.getLogin();
+        return "Message{" +
+                "id=" + id +
+                ", message='" + message + '\'' +
+                ", date=" + date +
+                ", theme=" + theme +
+                ", author=" + author +
+                '}';
     }
 
     public String getMessage() {

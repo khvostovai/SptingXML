@@ -34,6 +34,7 @@ public class LoginController {
         if (user != null) {
             request.getSession().setAttribute("user_name", user.getName());
             request.getSession().setAttribute("user_surname", user.getSurname());
+            request.getSession().setAttribute("user_id", user.getId());
             rv = new RedirectView("themes");
         }
         else {

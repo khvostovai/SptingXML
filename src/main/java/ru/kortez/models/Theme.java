@@ -2,6 +2,7 @@ package ru.kortez.models;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -14,6 +15,9 @@ public class Theme {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "update")
+    private Date update;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private User author;
@@ -22,6 +26,9 @@ public class Theme {
     private List<Message> messages;
 
     public Theme() {
+    }
+    public Theme(String title) {
+        this.title = title;
     }
 
     public Theme(String title, User author) {
@@ -75,5 +82,14 @@ public class Theme {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+
+    public Date getUpdate() {
+        return update;
+    }
+
+    public void setUpdate(Date update) {
+        this.update = update;
     }
 }

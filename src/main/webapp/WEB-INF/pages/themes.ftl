@@ -32,18 +32,21 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+
+                <form action="/forum/createTheme" modalAttribute="newTheme" method="post">
                 <div class="modal-body">
                     <div class="container">
                         <div class="form-group">
                             <label>Title: </label>
-                            <input class="form-control" id="title" type="text"/>
+                            <input class="form-control" id="title" name="title" path="title" type="text"/>
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button data-dismiss="modal" type="button" class="btn btn-secondary">Close</button>
-                    <button id="actionModalButton" class="btn btn-primary" type="button">Save</button>
+                    <button id="actionModalButton" class="btn btn-primary" type="submit">Save</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
@@ -51,18 +54,10 @@
     <!--script for button save in modal-->
     <script>
         $(document).ready(function () {
-            // for add theme button
-            $("#actionModalButton").on('click', function () {
-                $.ajax({
-                    url: "/forum/createTheme",
-                    type: "POST",
-                    data: "title=" + $("#title").val()
-                });
-            });
 
             //open theme page in theme id
             $("div.theme").on('click', function () {
-                window.location.href = "/forum/theme?themeId="+$(this).attr("id");
+                window.location.href = "/forum/theme?themeId=" + $(this).attr("id");
             })
         })
     </script>

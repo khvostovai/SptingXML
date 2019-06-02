@@ -19,8 +19,7 @@ public class UserDao {
     }
 
     public User findByLogin(String login) {
-        Query query = sessionFactory.openSession().createQuery("" +
-                "from User u where u.login=:userLogin");
+        Query query = sessionFactory.openSession().createQuery("from User u where u.login=:userLogin");
         query.setParameter("userLogin", login);
         List results = query.list();
         if (results.size()!=0)

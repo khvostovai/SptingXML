@@ -1,17 +1,29 @@
 <#import "parts/loginPart.ftl" as l>
 <@l.page "Theme">
-    <p><b>List of messages</b></p>
+    <!-- field for input new message -->
+
+    <div class="container">
+        <form action="/forum/createMessage" modelAttribute="newMessage" method="post">
+            enter new message:
+            <textarea class="form-control" id="message" path="message" name="message">
+            </textarea>
+            <button class="btn btn-primary" type="submit">
+                post message
+            </button>
+        </form>
+    </div>
+
     <#if messages??>
         <#list messages as message>
             <div class="container">
                 Author: ${message.author.login}
                 <br>
                 ${message.message}
-                <br>
                 <br> ${message.date}
+                <hr>
             </div>
         </#list>
     </#if>
 
-    <!-- field for input new message -->
+
 </@l.page>
