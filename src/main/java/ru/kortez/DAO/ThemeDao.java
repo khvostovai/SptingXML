@@ -30,8 +30,9 @@ public class ThemeDao {
         return sessionFactory.openSession().createQuery("from Theme").list();
     }
 
+
     public List byOrder() {
-        Query query = sessionFactory.openSession().createSQLQuery("select t.title, x.minDate from \n" +
+        Query query = sessionFactory.openSession().createSQLQuery("select t.id, t.title, x.minDate from \n" +
                 "(select theme_id, max(date) as minDate from messages group by theme_id)\n" +
                 "as x inner join themes as t on t.id = x.theme_id");
         return query.list();

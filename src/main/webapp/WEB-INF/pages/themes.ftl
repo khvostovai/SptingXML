@@ -13,10 +13,8 @@
             <div class="theme container btn btn-light" id=${theme.id}>
                 <p><b>${theme.title}</b></p>
                 last message
-                <hr>
-                Author: ${theme.author.name} ${theme.author.surname}
                 <br>
-                Date: date
+                Date: ${theme.date}
             </div>
         </#list>
     </#if>

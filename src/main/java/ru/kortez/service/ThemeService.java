@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.ThemeDao;
+import ru.kortez.DAO.ThemeResult;
 import ru.kortez.models.Theme;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class ThemeService {
@@ -36,7 +37,17 @@ public class ThemeService {
 
     @Transactional
     public List getThemesByOrder(){
-        return themeDao.byOrder();
+        Map<String, Object> themes = new HashMap<>();
+        List<Map<String, Object>> resultList = new ArrayList<>();
+        List<Object[]> result = themeDao.byOrder();
+        for (Object[] o : result) {
+            Map<String, Object> theme = new HashMap<>();
+            theme.put("id", o[0]);
+            theme.put("title", o[1]);
+            theme.put("date", o[2]);
+            resultList.add(theme);
+        }
+        return resultList;
     }
 
 
