@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.ThemeDao;
-import ru.kortez.DAO.ThemeResult;
 import ru.kortez.models.Theme;
 
 import java.util.*;
@@ -49,17 +48,4 @@ public class ThemeService {
         }
         return resultList;
     }
-
-
-    public List getThemesByPage(int page) {
-        List themes = getAllThemes();
-        //10 themes at page
-        if (themes.size() < 10) {
-            return themes;
-        } else {
-            themes = themes.subList(10 * page, 10 * (page + 1));
-            return themes;
-        }
-    }
-
 }

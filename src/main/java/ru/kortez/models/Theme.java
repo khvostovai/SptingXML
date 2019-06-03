@@ -1,12 +1,10 @@
 package ru.kortez.models;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Table (name = "themes")
+@Table(name = "themes")
 public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,9 +12,6 @@ public class Theme {
 
     @Column(name = "title")
     private String title;
-
-    @Column(name = "update")
-    private Date update;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
@@ -27,6 +22,7 @@ public class Theme {
 
     public Theme() {
     }
+
     public Theme(String title) {
         this.title = title;
     }
@@ -50,10 +46,6 @@ public class Theme {
     public void removeMessage(Message message) {
         if (message != null)
             this.messages.remove(message);
-    }
-
-    public List<Message> getMessages() {
-        return messages;
     }
 
     public void setMessages(List<Message> messages) {
@@ -82,14 +74,5 @@ public class Theme {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    public Date getUpdate() {
-        return update;
-    }
-
-    public void setUpdate(Date update) {
-        this.update = update;
     }
 }

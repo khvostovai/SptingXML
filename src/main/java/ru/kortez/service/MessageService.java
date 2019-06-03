@@ -5,6 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.kortez.DAO.MessageDao;
 import ru.kortez.models.Message;
+import ru.kortez.models.Theme;
+
+import java.util.List;
 
 
 @Service
@@ -30,5 +33,10 @@ public class MessageService {
     @Transactional
     public void changeMessage(Message message) {
         messageDao.updateMessage(message);
+    }
+
+    @Transactional
+    public List getMessageByTheme(Theme theme) {
+        return messageDao.getMessageByTheme(theme);
     }
 }

@@ -2,7 +2,7 @@
 <@l.page "themes">
     <form action="/forum/addTheme">
         <button id="addButton" class="btn btn-primary" type="button" data-toggle="modal" data-pid="0" data-action="/add"
-                data-target="#addTheme">For add requirement click hire
+                data-target="#addTheme">add Theme
         </button>
     </form>
     <#if themes??>
@@ -12,9 +12,8 @@
             <hr>
             <div class="theme container btn btn-light" id=${theme.id}>
                 <p><b>${theme.title}</b></p>
-                last message
                 <br>
-                Date: ${theme.date}
+                Last message: ${theme.date}
             </div>
         </#list>
     </#if>

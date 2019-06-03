@@ -37,7 +37,7 @@ public class MessageController {
         newMessage.setTheme(theme);
         newMessage.setDate(new Date());
         messageService.addMessage(newMessage);
-        mav.addObject("messages", theme.getMessages());
+        mav.addObject("messages", messageService.getMessageByTheme(theme));
         return mav;
     }
 }

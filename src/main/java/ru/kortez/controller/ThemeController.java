@@ -15,6 +15,7 @@ import ru.kortez.service.UserService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 public class ThemeController {
@@ -46,6 +47,7 @@ public class ThemeController {
         User user = userService.getUser((int) request.getSession().getAttribute("user_id"));
         newTheme.setAuthor(user);
         themeService.addTheme(newTheme);
+        messageService.addMessage(new Message("create theme", newTheme, user));
         return new RedirectView("themes");
     }
 
@@ -55,7 +57,7 @@ public class ThemeController {
         request.getSession().setAttribute("theme_id", themeId);
         ModelAndView mav = new ModelAndView("theme");
         Theme theme = themeService.getTheme(themeId);
-        mav.addObject("messages", theme.getMessages());
+        mav.addObject("messages", messageService.getMessageByTheme(theme));
         mav.addObject("newMessage", new Message(theme));
         return mav;
     }
