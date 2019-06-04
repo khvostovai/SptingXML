@@ -30,9 +30,16 @@ public class MessageDao {
         sessionFactory.openSession().update(message);
     }
 
-    public List getMessageByTheme(Theme theme) {
+    public List getMessageByTheme(Theme theme, int first, int pageSize) {
         return sessionFactory.openSession().createQuery("from Message m where m.theme = :theme order by m.date desc ")
                 .setParameter("theme",theme)
+                .setFirstResult(first)
+                .setMaxResults(pageSize)
                 .list();
+    }
+
+    public long getCountMessageByTheme(Theme theme) {
+        return (long) sessionFactory.openSession().createQuery("select count(m.id)from Message m where m.theme = :theme")
+        .setParameter("theme", theme).uniqueResult();
     }
 }

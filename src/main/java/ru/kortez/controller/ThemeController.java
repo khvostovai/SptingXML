@@ -2,6 +2,7 @@ package ru.kortez.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -53,13 +54,19 @@ public class ThemeController {
 
     @RequestMapping(value = "/theme", method = RequestMethod.GET)
     public ModelAndView theme(HttpServletRequest request, HttpServletResponse response,
-                              @ModelAttribute("themeId") int themeId) {
-        request.getSession().setAttribute("theme_id", themeId);
+                              @ModelAttribute("themeId") int themeId,
+                              @RequestParam(value = "page", defaultValue = "0") int page,
+                              @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        if (request.getSession().getAttribute("theme_id") == null)
+            request.getSession().setAttribute("theme_id", themeId);
         ModelAndView mav = new ModelAndView("theme");
         Theme theme = themeService.getTheme(themeId);
-        mav.addObject("messages", messageService.getMessageByTheme(theme));
+        mav.addObject("page", page);
+        mav.addObject("countPages", messageService.getCountPages(theme, pageSize));
+        mav.addObject("messages", messageService.getMessageByTheme(theme, page * pageSize, page * pageSize + pageSize));
         mav.addObject("newMessage", new Message(theme));
         return mav;
     }
+
 }
 

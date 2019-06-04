@@ -36,7 +36,12 @@ public class MessageService {
     }
 
     @Transactional
-    public List getMessageByTheme(Theme theme) {
-        return messageDao.getMessageByTheme(theme);
+    public List getMessageByTheme(Theme theme, int first, int pageSize) {
+        return messageDao.getMessageByTheme(theme, first, pageSize);
+    }
+
+    @Transactional
+    public int getCountPages(Theme theme, int pageSize) {
+        return (int) Math.ceil(messageDao.getCountMessageByTheme(theme) / pageSize);
     }
 }
