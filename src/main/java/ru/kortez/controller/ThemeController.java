@@ -31,7 +31,9 @@ public class ThemeController {
     UserService userService;
 
     @RequestMapping(value = "/themes", method = RequestMethod.GET)
-    public ModelAndView themes(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView themes(HttpServletRequest request,
+                               HttpServletResponse response) {
+
         ModelAndView mav = new ModelAndView("themes");
         mav.addObject("user_name", request.getSession().getAttribute("user_name"));
         mav.addObject("user_surname", request.getSession().getAttribute("user_surname"));
@@ -43,7 +45,9 @@ public class ThemeController {
     }
 
     @RequestMapping(value = "/createTheme", method = RequestMethod.POST)
-    public RedirectView createTheme(HttpServletRequest request, @ModelAttribute("newTheme") Theme newTheme) {
+    public RedirectView createTheme(HttpServletRequest request,
+                                    @ModelAttribute("newTheme") Theme newTheme) {
+
         System.out.println(newTheme.getTitle());
         User user = userService.getUser((int) request.getSession().getAttribute("user_id"));
         newTheme.setAuthor(user);
@@ -53,10 +57,12 @@ public class ThemeController {
     }
 
     @RequestMapping(value = "/theme", method = RequestMethod.GET)
-    public ModelAndView theme(HttpServletRequest request, HttpServletResponse response,
+    public ModelAndView theme(HttpServletRequest request,
+                              HttpServletResponse response,
                               @ModelAttribute("themeId") int themeId,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+
         if (request.getSession().getAttribute("theme_id") == null)
             request.getSession().setAttribute("theme_id", themeId);
         ModelAndView mav = new ModelAndView("theme");
