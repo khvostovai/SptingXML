@@ -35,10 +35,10 @@ public class ThemeService {
     }
 
     @Transactional
-    public List getThemesByOrder(){
+    public List getThemesByOrder(int first, int pageSize) {
+        List<Object[]> result = themeDao.byOrder(first, pageSize);
         Map<String, Object> themes = new HashMap<>();
         List<Map<String, Object>> resultList = new ArrayList<>();
-        List<Object[]> result = themeDao.byOrder();
         for (Object[] o : result) {
             Map<String, Object> theme = new HashMap<>();
             theme.put("id", o[0]);
@@ -47,5 +47,10 @@ public class ThemeService {
             resultList.add(theme);
         }
         return resultList;
+    }
+
+    @Transactional
+    public int getCountPages(int pageSize) {
+        return (int) Math.ceil(themeDao.getCountOfThemes() / pageSize);
     }
 }

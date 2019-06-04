@@ -2,7 +2,6 @@ package ru.kortez.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
@@ -15,8 +14,6 @@ import ru.kortez.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Date;
-import java.util.List;
 
 @Controller
 public class ThemeController {
@@ -32,14 +29,16 @@ public class ThemeController {
 
     @RequestMapping(value = "/themes", method = RequestMethod.GET)
     public ModelAndView themes(HttpServletRequest request,
-                               HttpServletResponse response) {
+                               HttpServletResponse response,
+                               @RequestParam(value = "page", defaultValue = "0") int page,
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
 
         ModelAndView mav = new ModelAndView("themes");
         mav.addObject("user_name", request.getSession().getAttribute("user_name"));
         mav.addObject("user_surname", request.getSession().getAttribute("user_surname"));
-
-        mav.addObject("themes", themeService.getThemesByOrder());
-
+        mav.addObject("page", page);
+        mav.addObject("countPages", themeService.getCountPages(pageSize));
+        mav.addObject("themes", themeService.getThemesByOrder(page * pageSize, page * pageSize + pageSize));
         mav.addObject("newTheme", new Theme());
         return mav;
     }

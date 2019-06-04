@@ -31,9 +31,22 @@ public class ThemeDao {
     }
 
     public List byOrder() {
-        Query query = sessionFactory.openSession().createSQLQuery("select t.id, t.title, x.minDate from \n" +
+        return sessionFactory.openSession().createSQLQuery("select t.id, t.title, x.minDate from \n" +
                 "(select theme_id, max(date) as minDate from messages group by theme_id)\n" +
-                "as x inner join themes as t on t.id = x.theme_id order by minDate desc ");
-        return query.list();
+                "as x inner join themes as t on t.id = x.theme_id order by minDate desc ")
+                .list();
+    }
+
+    public List byOrder(int first, int pageSize) {
+        return sessionFactory.openSession().createSQLQuery("select t.id, t.title, x.minDate from \n" +
+                "(select theme_id, max(date) as minDate from messages group by theme_id)\n" +
+                "as x inner join themes as t on t.id = x.theme_id order by minDate desc ")
+                .setFirstResult(first)
+                .setMaxResults(pageSize)
+                .list();
+    }
+
+    public long getCountOfThemes() {
+        return (long) sessionFactory.openSession().createQuery("select count(t.id) from Theme t").uniqueResult();
     }
 }
