@@ -21,14 +21,14 @@ public class LoginController {
     private UserService userService;
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView login() {
         ModelAndView mav = new ModelAndView("login");
         mav.addObject("login", new Login());
         return mav;
     }
 
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-    public RedirectView loginProcess(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") Login login) {
+    public RedirectView loginProcess(HttpServletRequest request, @ModelAttribute("login") Login login) {
         RedirectView rv = null;
         User user = userService.validateUser(login);
         if (user != null) {

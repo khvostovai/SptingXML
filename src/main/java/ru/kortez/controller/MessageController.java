@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 import ru.kortez.models.Message;
 import ru.kortez.models.Theme;
@@ -29,11 +30,14 @@ public class MessageController {
 
 
     @RequestMapping(value = "/createMessage", method = RequestMethod.POST)
-    ModelAndView createMessage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("newMessage") Message newMessage) {
+    ModelAndView createMessage(@ModelAttribute("newMessage") Message newMessage,
+                               @SessionAttribute("uer_id") int user_id,
+                               @SessionAttribute("theme_id") int theme_id) {
+
         ModelAndView mav = new ModelAndView("theme");
-        User user = userService.getUser((int)request.getSession().getAttribute("user_id"));
+        User user = userService.getUser(user_id);
         newMessage.setAuthor(user);
-        Theme theme = themeService.getTheme((int)request.getSession().getAttribute("theme_id"));
+        Theme theme = themeService.getTheme(theme_id);
         newMessage.setTheme(theme);
         newMessage.setDate(new Date());
         messageService.addMessage(newMessage);

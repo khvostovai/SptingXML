@@ -31,11 +31,14 @@ public class ThemeController {
     public ModelAndView themes(HttpServletRequest request,
                                HttpServletResponse response,
                                @RequestParam(value = "page", defaultValue = "0") int page,
-                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize,
+                               @SessionAttribute(value = "user_id") int user_id) {
 
+        User user = userService.getUser(user_id);
         ModelAndView mav = new ModelAndView("themes");
-        mav.addObject("user_name", request.getSession().getAttribute("user_name"));
-        mav.addObject("user_surname", request.getSession().getAttribute("user_surname"));
+        mav.addObject("user_name", user.getName());
+        mav.addObject("user_surname", user.getSurname());
+        mav.addObject("user_permission", user.isPermission());
         mav.addObject("page", page);
         mav.addObject("countPages", themeService.getCountPages(pageSize));
         mav.addObject("themes", themeService.getThemesByOrder(page * pageSize, page * pageSize + pageSize));
@@ -45,14 +48,26 @@ public class ThemeController {
 
     @RequestMapping(value = "/createTheme", method = RequestMethod.POST)
     public RedirectView createTheme(HttpServletRequest request,
-                                    @ModelAttribute("newTheme") Theme newTheme) {
+                                    @ModelAttribute("newTheme") Theme newTheme,
+                                    @SessionAttribute(value = "user_id") int user_id) {
 
-        System.out.println(newTheme.getTitle());
-        User user = userService.getUser((int) request.getSession().getAttribute("user_id"));
+        User user = userService.getUser(user_id);
         newTheme.setAuthor(user);
         themeService.addTheme(newTheme);
         messageService.addMessage(new Message("create theme", newTheme, user));
         return new RedirectView("themes");
+    }
+
+    @RequestMapping(value = "deletTheme", method = RequestMethod.GET)
+    public RedirectView deleteTheme(HttpServletRequest request, HttpServletResponse response,
+                                    @ModelAttribute(value = "themeId") int themeId,
+                                    @SessionAttribute(value = "user_id") int user_id) {
+        User user = userService.getUser(user_id);
+        if(user.isPermission()) {
+            themeService.removeTheme(themeService.getTheme(themeId));
+            System.out.println("theme was delete");
+        }
+        return new RedirectView(("theme"));
     }
 
     @RequestMapping(value = "/theme", method = RequestMethod.GET)
@@ -72,6 +87,5 @@ public class ThemeController {
         mav.addObject("newMessage", new Message(theme));
         return mav;
     }
-
 }
 

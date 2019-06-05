@@ -19,14 +19,14 @@ public class RegistrationController {
     @Autowired
     UserService userService;
     @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public ModelAndView register(HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView register() {
         ModelAndView mav = new ModelAndView("registration");
         mav.addObject("user", new User());
         return mav;
     }
 
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
-    public RedirectView addUser(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("user") User user) {
+    public RedirectView addUser(@ModelAttribute("user") User user) {
         userService.addUser(user);
         return new RedirectView("login");
     }
