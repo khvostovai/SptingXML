@@ -1,10 +1,9 @@
 package ru.kortez.controller;
 
+import org.codehaus.jackson.map.util.JSONWrappedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 import ru.kortez.models.Login;
@@ -12,13 +11,19 @@ import ru.kortez.models.User;
 import ru.kortez.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 
 @Controller
 public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @RequestMapping(value = "/checkLogin")
+    public @ResponseBody String checkLogin(@RequestParam(value = "login") String login) {
+        System.out.println(login);
+        return "check";
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
