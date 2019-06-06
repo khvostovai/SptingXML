@@ -27,7 +27,11 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
     public RedirectView addUser(@ModelAttribute("user") User user) {
-        userService.addUser(user);
-        return new RedirectView("login");
+        if(userService.checkPassword(user.getPasswd()) && userService.loginFree(user.getLogin())){
+            userService.addUser(user);
+            return new RedirectView("login");
+        }
+        else
+            return new RedirectView("registration");
     }
 }

@@ -1,6 +1,5 @@
 package ru.kortez.controller;
 
-import org.codehaus.jackson.map.util.JSONWrappedObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +20,10 @@ public class LoginController {
 
     @RequestMapping(value = "/checkLogin")
     public @ResponseBody String checkLogin(@RequestParam(value = "login") String login) {
-        System.out.println(login);
-        return "check";
+        if (userService.loginFree(login))
+            return "free";
+        else
+            return "lock";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
