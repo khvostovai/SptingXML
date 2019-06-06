@@ -10,28 +10,25 @@ import org.springframework.web.servlet.view.RedirectView;
 import ru.kortez.models.User;
 import ru.kortez.service.UserService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 @Controller
 public class RegistrationController {
 
     @Autowired
     UserService userService;
+
+    //registration page
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public ModelAndView register() {
-        ModelAndView mav = new ModelAndView("registration");
-        mav.addObject("user", new User());
-        return mav;
+        return new ModelAndView("registration", "user", new User());
     }
 
+    //process registration with safe politic(password and login)
     @RequestMapping(value = "/registerProcess", method = RequestMethod.POST)
     public RedirectView addUser(@ModelAttribute("user") User user) {
-        if(userService.checkPassword(user.getPasswd()) && userService.loginFree(user.getLogin())){
+        if (userService.checkPassword(user.getPasswd()) && userService.loginFree(user.getLogin())) {
             userService.addUser(user);
             return new RedirectView("login");
-        }
-        else
+        } else
             return new RedirectView("registration");
     }
 }

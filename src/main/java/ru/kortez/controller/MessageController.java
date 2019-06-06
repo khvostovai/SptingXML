@@ -2,11 +2,10 @@ package ru.kortez.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import ru.kortez.models.Login;
 import ru.kortez.models.Message;
 import ru.kortez.models.Theme;
 import ru.kortez.models.User;
@@ -15,7 +14,6 @@ import ru.kortez.service.ThemeService;
 import ru.kortez.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 
 @Controller
@@ -28,20 +26,24 @@ public class MessageController {
     @Autowired
     private ThemeService themeService;
 
-
+    //method for create messages
     @RequestMapping(value = "/createMessage", method = RequestMethod.POST)
-    ModelAndView createMessage(@ModelAttribute("newMessage") Message newMessage,
-                               @SessionAttribute("uer_id") int user_id,
+    RedirectView createMessage(@ModelAttribute("newMessage") Message newMessage,
+                               @SessionAttribute("user_id") int user_id,
                                @SessionAttribute("theme_id") int theme_id) {
 
-        ModelAndView mav = new ModelAndView("theme");
         User user = userService.getUser(user_id);
         newMessage.setAuthor(user);
         Theme theme = themeService.getTheme(theme_id);
         newMessage.setTheme(theme);
         newMessage.setDate(new Date());
         messageService.addMessage(newMessage);
-        mav.addObject("messages", messageService.getMessageByTheme(theme, 0, 10));
-        return mav;
+        return new RedirectView("theme");
+    }
+
+    //for redirect to login
+    @RequestMapping(value = "/createMessage", method = RequestMethod.GET)
+    public RedirectView redirectView(){
+        return new RedirectView("login");
     }
 }

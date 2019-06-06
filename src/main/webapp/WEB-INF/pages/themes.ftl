@@ -14,7 +14,7 @@
                 <hr>
                 <div class="container">
                     <div class="row">
-                        <div class="theme col bnt bnt-light" id=${theme.id}>
+                        <div class="theme col btn btn-light" id=${theme.id}>
                             <p><b>${theme.title}</b></p>
                             <p>Last message: ${theme.date}</p>
                         </div>
@@ -81,7 +81,7 @@
 
             //open theme page in theme id
             $("div.theme").on('click', function () {
-                window.location.href = "/forum/theme?themeId=" + $(this).attr("id");
+                window.location.href = "/forum/theme?theme_id=" + $(this).attr("id");
             })
         })
     </script>

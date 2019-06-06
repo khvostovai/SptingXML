@@ -30,6 +30,13 @@ public class ThemeService {
     }
 
     @Transactional
+    public void removeTheme(int id) {
+        Theme theme = getTheme(id);
+        if (theme != null)
+            themeDao.delete(theme);
+    }
+
+    @Transactional
     public List getAllThemes() {
         return themeDao.findAll();
     }

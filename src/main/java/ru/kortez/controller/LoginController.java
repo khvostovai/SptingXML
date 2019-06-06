@@ -18,14 +18,17 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    //for ajax request only
     @RequestMapping(value = "/checkLogin")
-    public @ResponseBody String checkLogin(@RequestParam(value = "login") String login) {
+    public @ResponseBody
+    String checkLogin(@RequestParam(value = "login", required = true) String login) {
         if (userService.loginFree(login))
             return "free";
         else
             return "lock";
     }
 
+    //login page with model Login object for user date
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView login() {
         ModelAndView mav = new ModelAndView("login");
@@ -33,19 +36,20 @@ public class LoginController {
         return mav;
     }
 
+    //method for login process, input = Login object with user data
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
-    public RedirectView loginProcess(HttpServletRequest request, @ModelAttribute("login") Login login) {
-        RedirectView rv = null;
-        User user = userService.validateUser(login);
+    public RedirectView loginProcess(HttpServletRequest request, @ModelAttribute("login") Login logObj) {
+        User user = userService.validateUser(logObj);
         if (user != null) {
+            //load user data to session
             request.getSession().setAttribute("user_name", user.getName());
             request.getSession().setAttribute("user_surname", user.getSurname());
             request.getSession().setAttribute("user_id", user.getId());
-            rv = new RedirectView("themes");
+            return new RedirectView("themes");
         }
+        //if user data isn't correct
         else {
-            rv = new RedirectView("login");
+            return new RedirectView("login");
         }
-        return rv;
     }
 }
