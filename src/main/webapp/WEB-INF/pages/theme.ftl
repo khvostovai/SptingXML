@@ -7,7 +7,7 @@
                 <form action="/forum/createMessage" modelAttribute="newMessage" method="post">
                     enter new message:
                     <textarea class="form-control" id="message" path="message" name="message"></textarea>
-                    <input type="hidden" name="theme_id" value="${theme_id}">
+                    <input type="hidden" id="theme_id" name="theme_id" value="${theme_id}">
                     <button class="btn btn-primary" type="submit">
                         post message
                     </button>

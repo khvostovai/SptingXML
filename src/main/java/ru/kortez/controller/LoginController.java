@@ -36,6 +36,13 @@ public class LoginController {
         return mav;
     }
 
+    //logout
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public RedirectView logout(HttpServletRequest request) {
+        request.getSession().invalidate();
+        return new RedirectView("login");
+    }
+
     //method for login process, input = Login object with user data
     @RequestMapping(value = "/loginProcess", method = RequestMethod.POST)
     public RedirectView loginProcess(HttpServletRequest request, @ModelAttribute("login") Login logObj) {

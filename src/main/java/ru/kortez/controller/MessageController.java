@@ -30,7 +30,7 @@ public class MessageController {
     @RequestMapping(value = "/createMessage", method = RequestMethod.POST)
     RedirectView createMessage(@ModelAttribute("newMessage") Message newMessage,
                                @SessionAttribute("user_id") int user_id,
-                               @SessionAttribute("theme_id") int theme_id) {
+                               @ModelAttribute(value = "theme_id") int theme_id) {
 
         User user = userService.getUser(user_id);
         newMessage.setAuthor(user);

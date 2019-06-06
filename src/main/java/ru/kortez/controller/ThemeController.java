@@ -90,7 +90,7 @@ public class ThemeController {
     @RequestMapping(value = "/theme", method = RequestMethod.GET)
     public ModelAndView theme(HttpServletRequest request,
                               HttpServletResponse response,
-                              @ModelAttribute("theme_id") int theme_id,
+                              @RequestParam(value = "theme_id") int theme_id,
                               @RequestParam(value = "page", defaultValue = "0") int page,
                               @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         //for new session
@@ -98,8 +98,11 @@ public class ThemeController {
             return new ModelAndView("login", "login", new Login());
 
 
-        if (request.getSession().getAttribute("theme_id") == null)
+        if (request.getSession().getAttribute("theme_id") == null) {
             request.getSession().setAttribute("theme_id", theme_id);
+        }
+        else
+            theme_id = (int) request.getSession().getAttribute("theme_id");
         ModelAndView mav = new ModelAndView("theme");
         Theme theme = themeService.getTheme(theme_id);
         mav.addObject("page", page);
